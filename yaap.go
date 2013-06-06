@@ -40,7 +40,7 @@ func Assert(t Test, depth int, ok bool, msg ...interface{}) {
 			t.Fatal(fmt.Sprint(msg...))
 		}
 		// testing package hack
-		t.Fatal(fmt.Sprint("\r\t%s: ", caller), fmt.Sprint(msg...))
+		t.Fatal(fmt.Sprintf("\r\t%s: ", caller), fmt.Sprint(msg...))
 	}
 }
 
