@@ -86,7 +86,7 @@ func Error(t yup.Test, err error, msg ...interface{}) {
 }
 
 // The opposite of Error().
-func NoError(t yup.Test, err error, msg ...interface{}) {
+func NotError(t yup.Test, err error, msg ...interface{}) {
 	yup.Assert(t, 1, err == nil, "unexpected error", err, "; ", fmt.Sprint(msg...))
 }
 

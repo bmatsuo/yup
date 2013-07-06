@@ -46,3 +46,18 @@ func TestNotNil(t *testing.T) {
 	Equal(t, 1, len(rec.Log), "unexpected number of errors")
 }
 
+func TestZero(t *testing.T) {
+	t.Fatal("unimplemented")
+}
+
+func TestNotZero(t *testing.T) {
+	t.Fatal("unimplemented")
+}
+
+func TestError(t *testing.T) {
+	t.Fatal("unimplemented")
+}
+
+func TestNotError(t *testing.T) {
+	t.Fatal("unimplemented")
+}
