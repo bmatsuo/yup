@@ -16,19 +16,18 @@ import (
 	"reflect"
 )
 
-
 // Deep structural equality between expected and val.
 func Equal(t yup.Test, expected, val interface{}, msg ...interface{}) {
 	yup.Assert(t, 1, reflect.DeepEqual(expected, val),
-		fmt.Sprintf("expected %#v but received %#v; ", expected, val),
-		fmt.Sprint(msg...))
+		fmt.Sprintf("expected %#v but received %#v; %v",
+			expected, val, fmt.Sprint(msg...)))
 }
 
 // The opposite of Equal().
 func NotEqual(t yup.Test, expected, val interface{}, msg ...interface{}) {
 	yup.Assert(t, 1, !reflect.DeepEqual(expected, val),
-		fmt.Sprintf("expected %#v but received %#v; ", expected, val),
-		fmt.Sprint(msg...))
+		fmt.Sprintf("expected %#v but received %#v; %v",
+			expected, val, fmt.Sprint(msg...)))
 }
 
 // Val is nil.
