@@ -66,6 +66,8 @@ func ContainsString(t yup.Test, str, substr string, msg ...interface{}) {
 			substr, str, fmt.Sprint(msg...)))
 }
 
+/*
+TODO these need an assertion that r is not nil
 func Match(t yup.Test, p []byte, r *regexp.Regexp, msg ...interface{}) {
 	matchRegexp(t, 1, string(p), r, msg...)
 }
@@ -73,6 +75,7 @@ func Match(t yup.Test, p []byte, r *regexp.Regexp, msg ...interface{}) {
 func MatchString(t yup.Test, str string, r *regexp.Regexp, msg ...interface{}) {
 	matchRegexp(t, 1, str, r, msg...)
 }
+*/
 
 func MatchPatt(t yup.Test, p []byte, patt string, msg ...interface{}) {
 	r := compileRegexp(t, 1, patt, msg...)
