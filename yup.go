@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// yaap.go [created: Wed,  5 Jun 2013]
+// yup.go [created: Wed,  5 Jun 2013]
 
 /*
 Yet another assertion package. Simple and extensible.
 
-The yaap package exports a single generic function, Assert(). More complex
+The yup package exports a single generic function, Assert(). More complex
 assertions are defined in the package's subdirectories.
 */
-package yaap
+package yup
 
 import (
 	"fmt"

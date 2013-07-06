@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// yaap_test.go [created: Thu,  6 Jun 2013]
+// yup_test.go [created: Thu,  6 Jun 2013]
 
-package yaap
+package yup
 
 import (
-	"github.com/bmatsuo/yaap/yaaptesting"
+	"github.com/bmatsuo/yup/yuptesting"
 
 	"fmt"
 	"runtime"
@@ -21,7 +21,7 @@ func T(t Test, ok bool, msg ...interface{}) {
 
 func TestAssert(t *testing.T) {
 	var preAssertLine int
-	rec := yaaptesting.Mock(func(t yaaptesting.Test) {
+	rec := yuptesting.Mock(func(t yuptesting.Test) {
 		Assert(t, 0, true, "a passed assertion")
 
 		_, _, preAssertLine, _ = runtime.Caller(0) // this is a little crazy
@@ -36,7 +36,7 @@ func TestAssert(t *testing.T) {
 	if !last.Fatal() {
 		t.Fatal("unexpected non-fatal error")
 	}
-	expectedPos := fmt.Sprintf("%s:%d", "yaap_test.go", preAssertLine+1)
+	expectedPos := fmt.Sprintf("%s:%d", "yup_test.go", preAssertLine+1)
 	if -1 == strings.Index(last.Value, expectedPos) {
 		t.Fatalf("position %q not found %q", expectedPos, last.Value)
 	}
@@ -46,7 +46,7 @@ func TestCompatabilityMode(t *testing.T) {
 	CompatabilityMode = true
 	defer func() { CompatabilityMode = false }()
 	var preAssertLine int
-	rec := yaaptesting.Mock(func(t yaaptesting.Test) {
+	rec := yuptesting.Mock(func(t yuptesting.Test) {
 		_, _, preAssertLine, _ = runtime.Caller(0) // this is a little crazy
 		Assert(t, 0, false, "a failed assertion")
 	})
@@ -57,16 +57,16 @@ func TestCompatabilityMode(t *testing.T) {
 	if last.Fatal() {
 		t.Fatal("unexpected fatal error")
 	}
-	expectedPos := fmt.Sprintf("%s:%d", "yaap_test.go", preAssertLine+1)
+	expectedPos := fmt.Sprintf("%s:%d", "yup_test.go", preAssertLine+1)
 	if -1 == strings.Index(last.Value, expectedPos) {
 		t.Fatalf("position %q not found %q", expectedPos, last.Value)
 	}
 }
 
 func TestT(t *testing.T) {
-	rec := yaaptesting.Mock(func(t yaaptesting.Test) { T(t, false) })
+	rec := yuptesting.Mock(func(t yuptesting.Test) { T(t, false) })
 	Assert(t, 0, rec.HadFatal(), "unexpected assertion pass")
 
-	rec = yaaptesting.Mock(func(t yaaptesting.Test) { T(t, true) })
+	rec = yuptesting.Mock(func(t yuptesting.Test) { T(t, true) })
 	Assert(t, 0, !rec.HadFatal(), "unexpected assertion failure")
 }
