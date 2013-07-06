@@ -4,7 +4,9 @@
 
 // yaaptype.go [created: Thu,  6 Jun 2013]
 
-// Package yaaptype does ....
+/*
+Implements generic type-based assertions, generally using reflection.
+*/
 package yaaptype
 
 import (
@@ -14,18 +16,22 @@ import (
 	"reflect"
 )
 
+
+// Deep structural equality between expected and val.
 func Equal(t yaap.Test, expected, val interface{}, msg ...interface{}) {
 	yaap.Assert(t, 1, reflect.DeepEqual(expected, val),
 		fmt.Sprintf("expected %#v but received %#v; ", expected, val),
 		fmt.Sprint(msg...))
 }
 
+// The opposite of Equal().
 func NotEqual(t yaap.Test, expected, val interface{}, msg ...interface{}) {
 	yaap.Assert(t, 1, !reflect.DeepEqual(expected, val),
 		fmt.Sprintf("expected %#v but received %#v; ", expected, val),
 		fmt.Sprint(msg...))
 }
 
+// Val is nil.
 // is this ever different than Zero() for pointer types?
 func Nil(t yaap.Test, val interface{}, msg ...interface{}) {
 	v := reflect.ValueOf(val)
@@ -42,6 +48,7 @@ func Nil(t yaap.Test, val interface{}, msg ...interface{}) {
 	yaap.Assert(t, 1, isNil, "unexpected non-nil value; ", fmt.Sprint(msg...))
 }
 
+// The opposite of Nil().
 // is this ever different than NotZero() for pointer types?
 func NotNil(t yaap.Test, val interface{}, msg ...interface{}) {
 	v := reflect.ValueOf(val)
@@ -58,26 +65,12 @@ func NotNil(t yaap.Test, val interface{}, msg ...interface{}) {
 	yaap.Assert(t, 1, !isNil, "unexpected nil value; ", fmt.Sprint(msg...))
 }
 
-func Error(t yaap.Test, err error, msg ...interface{}) {
-	yaap.Assert(t, 1, err != nil, "expected error; ", fmt.Sprint(msg...))
-}
-
-func NoError(t yaap.Test, err error, msg ...interface{}) {
-	yaap.Assert(t, 1, err == nil, "unexpected error", err, "; ", fmt.Sprint(msg...))
-}
-
-func True(t yaap.Test, ok bool, msg ...interface{}) {
-	yaap.Assert(t, 1, ok, "unexpected false value; ", fmt.Sprint(msg...))
-}
-
-func False(t yaap.Test, ok bool, msg ...interface{}) {
-	yaap.Assert(t, 1, !ok, "unexpected true value; ", fmt.Sprint(msg...))
-}
-
+// Val is the zero value of it's type.
 func Zero(t yaap.Test, val interface{}, msg ...interface{}) {
 	yaap.Assert(t, 1, isZero(val), "unexpected non-zero value; ", fmt.Sprint(msg...))
 }
 
+// The opposite of Zero().
 func NotZero(t yaap.Test, val interface{}, msg ...interface{}) {
 	yaap.Assert(t, 1, !isZero(val), "unexpected zero value; ", fmt.Sprint(msg...))
 }
@@ -86,4 +79,24 @@ func isZero(val interface{}) bool {
 	typ := reflect.TypeOf(val)
 	zero := reflect.Zero(typ)
 	return reflect.DeepEqual(val, zero.Interface())
+}
+
+// Err is not nil.
+func Error(t yaap.Test, err error, msg ...interface{}) {
+	yaap.Assert(t, 1, err != nil, "expected error; ", fmt.Sprint(msg...))
+}
+
+// The opposite of Error().
+func NoError(t yaap.Test, err error, msg ...interface{}) {
+	yaap.Assert(t, 1, err == nil, "unexpected error", err, "; ", fmt.Sprint(msg...))
+}
+
+// Ok is true.
+func True(t yaap.Test, ok bool, msg ...interface{}) {
+	yaap.Assert(t, 1, ok, "unexpected false value; ", fmt.Sprint(msg...))
+}
+
+// Ok is false.
+func False(t yaap.Test, ok bool, msg ...interface{}) {
+	yaap.Assert(t, 1, !ok, "unexpected true value; ", fmt.Sprint(msg...))
 }
