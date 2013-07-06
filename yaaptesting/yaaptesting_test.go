@@ -33,7 +33,8 @@ func TestMockError(t *testing.T) {
 }
 
 func TestMockFail(t *testing.T) {
-	rec := Mock(func(mocktest Test) {})
+	rec := Mock(func(mocktest Test) {
+	})
 	if len(rec.Log) != 0 {
 		t.Fatalf("exected empty log but found %d messages", len(rec.Log))
 	}
