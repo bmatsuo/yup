@@ -23,11 +23,10 @@ import (
 // location information included by the testing package.
 var CompatabilityMode = false
 
-// returns the nth caller in getcaller()'s caller's
-// call stack. when n is 0 getcaller() returns its
-// caller's location
+// returns the nth caller in getcaller()'s grandcaller's call stack. when n
+// is 0 getcaller() returns its grandcaller's location.
 func getcaller(n int) (file string, line int) {
-	_, file, line, ok := runtime.Caller(2+n)
+	_, file, line, ok := runtime.Caller(2 + n)
 	if ok {
 		return file, line
 	}
@@ -35,8 +34,8 @@ func getcaller(n int) (file string, line int) {
 }
 
 // a generic assertion function. if ok is false then msg is logged as a fatal
-// error. the line number logged with msg is the depth caller in Assert()'s
-// call stack. a depth of zero logs the location of Assert()'s caller.
+// error. the line number logged with msg is depth-th caller in Assert()'s
+// caller's call stack. a depth of zero logs the location of Assert()'s caller.
 func Assert(t Test, depth int, ok bool, msg ...interface{}) {
 	if !ok {
 		file, line := getcaller(depth)
