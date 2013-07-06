@@ -1,5 +1,7 @@
 [install go]: http://golang.org/install.html "Install Go"
 [godoc.org]: http://godoc.org/github.com/bmatsuo/yaap/ "godoc.org"
+[yaaptype]: http://godoc.org/github.com/bmatsuo/yaap/yaaptype/ "yaaptype"
+[yaaptesting]: http://godoc.org/github.com/bmatsuo/yaap/yaaptesting/ "yaaptesting"
 
 Yet Another Assertion Package
 =============================
@@ -10,6 +12,12 @@ Docs
 ====
 
 [godoc.org][]
+
+See Also
+========
+
+##[yaaptype][]
+##[yaaptesting][]
 
 Author
 ======

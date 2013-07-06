@@ -4,7 +4,12 @@
 
 // yaap.go [created: Wed,  5 Jun 2013]
 
-// Package yaap does ....
+/*
+Yet another assertion package. Simple and extensible.
+
+The yaap package exports a single generic function, Assert(). More complex
+assertions are defined in the package's subdirectories.
+*/
 package yaap
 
 import (
@@ -13,10 +18,14 @@ import (
 	"runtime"
 )
 
+// when true, assertion failure locations are logged on the line preceeding
+// the failure message. when false, carriage returns are used to overwrite the
+// location information included by the testing package.
 var CompatabilityMode = false
 
 // returns the nth caller in getcaller()'s caller's
-// call stack
+// call stack. when n is 0 getcaller() returns its
+// caller's location
 func getcaller(n int) (file string, line int) {
 	_, file, line, ok := runtime.Caller(2+n)
 	if ok {
@@ -25,11 +34,9 @@ func getcaller(n int) (file string, line int) {
 	return "", -1
 }
 
-func T(t Test, ok bool, msg ...interface{}) {
-	Assert(t, 1, ok, msg...)
-}
-
-// this should probably be public, but i need a better name
+// a generic assertion function. if ok is false then msg is logged as a fatal
+// error. the line number logged with msg is the depth caller in Assert()'s
+// call stack. a depth of zero logs the location of Assert()'s caller.
 func Assert(t Test, depth int, ok bool, msg ...interface{}) {
 	if !ok {
 		file, line := getcaller(depth)
@@ -38,8 +45,9 @@ func Assert(t Test, depth int, ok bool, msg ...interface{}) {
 			// don't do anything crazy
 			t.Error(caller)
 			t.Fatal(fmt.Sprint(msg...))
+			return // in case t is a weird implementation
 		}
-		// testing package hack
+		// testing package hack. override line number
 		t.Fatal(fmt.Sprintf("\r\t%s: ", caller), fmt.Sprint(msg...))
 	}
 }

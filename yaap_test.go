@@ -15,6 +15,10 @@ import (
 	"testing"
 )
 
+func T(t Test, ok bool, msg ...interface{}) {
+	Assert(t, 1, ok, msg...)
+}
+
 func TestAssert(t *testing.T) {
 	var preAssertLine int
 	rec := yaaptesting.Mock(func(t yaaptesting.Test) {
