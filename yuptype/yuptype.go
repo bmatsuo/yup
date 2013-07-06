@@ -66,12 +66,16 @@ func NotNil(t yup.Test, val interface{}, msg ...interface{}) {
 
 // Val is the zero value of it's type.
 func Zero(t yup.Test, val interface{}, msg ...interface{}) {
-	yup.Assert(t, 1, isZero(val), "unexpected non-zero value; ", fmt.Sprint(msg...))
+	yup.Assert(t, 1, isZero(val),
+		fmt.Sprintf("unexpected non-zero value (%#v); %v",
+			val, fmt.Sprint(msg...)))
 }
 
 // The opposite of Zero().
 func NotZero(t yup.Test, val interface{}, msg ...interface{}) {
-	yup.Assert(t, 1, !isZero(val), "unexpected zero value; ", fmt.Sprint(msg...))
+	yup.Assert(t, 1, !isZero(val),
+		fmt.Sprintf("unexpected zero value (%#v); %v",
+			val, fmt.Sprint(msg...)))
 }
 
 func isZero(val interface{}) bool {
@@ -90,7 +94,9 @@ func Error(t yup.Test, err error, msg ...interface{}) {
 
 // The opposite of Error().
 func NotError(t yup.Test, err error, msg ...interface{}) {
-	yup.Assert(t, 1, err == nil, "unexpected error", err, "; ", fmt.Sprint(msg...))
+	yup.Assert(t, 1, err == nil,
+		fmt.Sprintf("unexpected error (%v); %v",
+			err, fmt.Sprint(msg...)))
 }
 
 // Ok is true.
