@@ -7,6 +7,7 @@
 package yuptype
 
 import (
+	"fmt"
 	"github.com/bmatsuo/yup"
 	"github.com/bmatsuo/yup/yuptesting"
 	"testing"
@@ -47,17 +48,51 @@ func TestNotNil(t *testing.T) {
 }
 
 func TestZero(t *testing.T) {
-	t.Fatal("unimplemented")
+	rec := yuptesting.Mock(func(t yuptesting.Test) { Zero(t, nil) })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { Zero(t, int64(0)) })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
+	var empty []interface{}
+	rec = yuptesting.Mock(func(t yuptesting.Test) { Zero(t, empty) })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
+
+	rec = yuptesting.Mock(func(t yuptesting.Test) { Zero(t, make([]int, 0)) })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { Zero(t, new(struct{})) })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { Zero(t, "abc") })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
 }
 
 func TestNotZero(t *testing.T) {
-	t.Fatal("unimplemented")
+	rec := yuptesting.Mock(func(t yuptesting.Test) { NotZero(t, nil) })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { NotZero(t, int64(0)) })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
+	var empty []interface{}
+	rec = yuptesting.Mock(func(t yuptesting.Test) { NotZero(t, empty) })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
+
+	rec = yuptesting.Mock(func(t yuptesting.Test) { NotZero(t, make([]int, 0)) })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { NotZero(t, new(struct{})) })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { NotZero(t, "abc") })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
 }
 
 func TestError(t *testing.T) {
-	t.Fatal("unimplemented")
+	err := fmt.Errorf("")
+	rec := yuptesting.Mock(func(t yuptesting.Test) { Error(t, err) })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { Error(t, nil) })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
 }
 
 func TestNotError(t *testing.T) {
-	t.Fatal("unimplemented")
+	err := fmt.Errorf("")
+	rec := yuptesting.Mock(func(t yuptesting.Test) { NotError(t, err) })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { NotError(t, nil) })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
 }

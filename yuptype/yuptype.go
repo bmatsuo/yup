@@ -75,6 +75,9 @@ func NotZero(t yup.Test, val interface{}, msg ...interface{}) {
 }
 
 func isZero(val interface{}) bool {
+	if val == nil {
+		return true
+	}
 	typ := reflect.TypeOf(val)
 	zero := reflect.Zero(typ)
 	return reflect.DeepEqual(val, zero.Interface())
