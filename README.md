@@ -2,9 +2,13 @@
 [godoc.org]: http://godoc.org/github.com/bmatsuo/yaap/ "godoc.org"
 [yaaptype]: http://godoc.org/github.com/bmatsuo/yaap/yaaptype/ "yaaptype"
 [yaaptesting]: http://godoc.org/github.com/bmatsuo/yaap/yaaptesting/ "yaaptesting"
+[travis-ci]: https://api.travis-ci.org/bmatsuo/yup.png?branch=master "travis-ci"
 
-Yet Another Assertion Package
-=============================
+![travis-ci][]
+
+Yup. Another assert package
+===========================
+
 
     go get github.com/bmatsuo/yaap
 
