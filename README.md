@@ -18,9 +18,9 @@ Docs
 See Also
 ========
 
-##[yuptext][]
-##[yuptype][]
-##[yuptesting][]
+###[yuptext][]
+###[yuptype][]
+###[yuptesting][]
 
 Author
 ======
