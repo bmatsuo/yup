@@ -15,19 +15,15 @@ import (
 	"testing"
 )
 
-func T(t Test, ok bool, msg ...interface{}) {
-	Assert(t, 1, ok, msg...)
-}
-
 func TestAssert(t *testing.T) {
 	var preAssertLine int
 	rec := yuptesting.Mock(func(t yuptesting.Test) {
-		Assert(t, 0, true, "a passed assertion")
+		Assert(t, true, "a passed assertion")
 
 		_, _, preAssertLine, _ = runtime.Caller(0) // this is a little crazy
-		Assert(t, 0, false, "a failed assertion")
+		Assert(t, false, "a failed assertion")
 
-		Assert(t, 0, false, "this failure is never seen")
+		Assert(t, false, "this failure is never seen")
 	})
 	if len(rec.Log) != 1 {
 		t.Errorf("expected 1 log message but fonud %d", len(rec.Log))
@@ -48,7 +44,7 @@ func TestCompatabilityMode(t *testing.T) {
 	var preAssertLine int
 	rec := yuptesting.Mock(func(t yuptesting.Test) {
 		_, _, preAssertLine, _ = runtime.Caller(0) // this is a little crazy
-		Assert(t, 0, false, "a failed assertion")
+		Assert(t, false, "a failed assertion")
 	})
 	if len(rec.Log) != 2 {
 		t.Errorf("expected 2 log messages but found %d", len(rec.Log))
@@ -64,9 +60,9 @@ func TestCompatabilityMode(t *testing.T) {
 }
 
 func TestT(t *testing.T) {
-	rec := yuptesting.Mock(func(t yuptesting.Test) { T(t, false) })
-	Assert(t, 0, rec.HadFatal(), "unexpected assertion pass")
+	rec := yuptesting.Mock(func(t yuptesting.Test) { Assert(t, false) })
+	Assert(t, rec.HadFatal(), "unexpected assertion pass")
 
-	rec = yuptesting.Mock(func(t yuptesting.Test) { T(t, true) })
-	Assert(t, 0, !rec.HadFatal(), "unexpected assertion failure")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { Assert(t, true) })
+	Assert(t, !rec.HadFatal(), "unexpected assertion failure")
 }

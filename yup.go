@@ -33,12 +33,9 @@ func getcaller(n int) (file string, line int) {
 	return "", -1
 }
 
-// a generic assertion function. if ok is false then msg is logged as a fatal
-// error. the line number logged with msg is depth-th caller in Assert()'s
-// caller's call stack. a depth of zero logs the location of Assert()'s caller.
-func Assert(t Test, depth int, ok bool, msg ...interface{}) {
+func T(t Test, n int, ok bool, msg ...interface{}) {
 	if !ok {
-		file, line := getcaller(depth)
+		file, line := getcaller(n)
 		caller := fmt.Sprintf("%s:%d", filepath.Base(file), line)
 		if CompatabilityMode {
 			// don't do anything crazy
@@ -49,6 +46,13 @@ func Assert(t Test, depth int, ok bool, msg ...interface{}) {
 		// testing package hack. override line number
 		t.Fatal(fmt.Sprintf("\r\t%s: ", caller), fmt.Sprint(msg...))
 	}
+}
+
+// a generic assertion function. if ok is false then msg is logged as a fatal
+// error. the line number logged with msg is depth-th caller in Assert()'s
+// caller's call stack. a depth of zero logs the location of Assert()'s caller.
+func Assert(t Test, ok bool, msg ...interface{}) {
+	T(t, 1, ok, msg...)
 }
 
 // a minimal interface implemented by Test
