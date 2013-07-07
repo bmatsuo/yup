@@ -1,13 +1,13 @@
 [install go]: http://golang.org/install.html "Install Go"
-[godoc.org]: http://godoc.org/github.com/bmatsuo/yaap/ "godoc.org"
-[yaaptype]: http://godoc.org/github.com/bmatsuo/yaap/yaaptype/ "yaaptype"
-[yaaptesting]: http://godoc.org/github.com/bmatsuo/yaap/yaaptesting/ "yaaptesting"
+[godoc.org]: http://godoc.org/github.com/bmatsuo/yup/ "godoc.org"
+[yuptype]: http://godoc.org/github.com/bmatsuo/yup/yuptype/ "yuptype"
+[yuptesting]: http://godoc.org/github.com/bmatsuo/yup/yuptesting/ "yuptesting"
 [![Build Status](https://travis-ci.org/bmatsuo/yup.png?branch=master)](https://travis-ci.org/bmatsuo/yup)
 Yup. Another assert package
 ===========================
 
 
-    go get github.com/bmatsuo/yaap
+    go get github.com/bmatsuo/yup
 
 Docs
 ====
@@ -17,8 +17,8 @@ Docs
 See Also
 ========
 
-##[yaaptype][]
-##[yaaptesting][]
+##[yuptype][]
+##[yuptesting][]
 
 Author
 ======

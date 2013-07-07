@@ -1,32 +1,15 @@
 [install go]: http://golang.org/install.html "Install Go"
-[gopkgdoc]: http://go.pkgdoc.org/github.com/bmatsuo/yaaptesting/ "GoPkgDoc"
+[godoc.org]: http://godoc.org/github.com/bmatsuo/yuptesting/ "godoc.org"
 
-About
-=============
+Install
+=======
 
-<no value>
+    go get github.com/bmatsuo/yuptesting
 
-Documentation
-=============
+Docs
+====
 
-Prerequisites
--------------
-
-[Install Go][].
-
-Installation
--------------
-
-    go get github.com/bmatsuo/yaaptesting
-
-General Documentation
----------------------
-
-Use `go doc` to vew the documentation for yaaptesting
-
-    go doc github.com/bmatsuo/yaaptesting
-
-Or alternatively, check out [GoPkgDoc][]
+on [godoc.org][]
 
 Author
 ======

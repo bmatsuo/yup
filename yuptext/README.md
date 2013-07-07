@@ -1,9 +1,9 @@
-[godoc.org]: http://godoc.org/github.com/bmatsuo/yupstring/ "godoc.org"
+[godoc.org]: http://godoc.org/github.com/bmatsuo/yup/yuptext/ "godoc.org"
 
 Install
 =======
 
-    go get github.com/bmatsuo/yupstring
+    go get github.com/bmatsuo/yup/yuptext
 
 Docs
 ====

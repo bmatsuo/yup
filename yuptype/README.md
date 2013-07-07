@@ -1,32 +1,15 @@
 [install go]: http://golang.org/install.html "Install Go"
-[gopkgdoc]: http://go.pkgdoc.org/github.com/bmatsuo/yaaptype/ "GoPkgDoc"
+[godoc.org]: http://go.pkgdoc.org/github.com/bmatsuo/yuptype/ "godoc.org"
 
-About
-=============
+Install
+=======
 
-<no value>
+    go get github.com/bmatsuo/yuptype
 
-Documentation
-=============
+Docs
+====
 
-Prerequisites
--------------
-
-[Install Go][].
-
-Installation
--------------
-
-    go get github.com/bmatsuo/yaaptype
-
-General Documentation
----------------------
-
-Use `go doc` to vew the documentation for yaaptype
-
-    go doc github.com/bmatsuo/yaaptype
-
-Or alternatively, check out [GoPkgDoc][]
+on [godoc.org][]
 
 Author
 ======
