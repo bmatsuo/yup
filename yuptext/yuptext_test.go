@@ -187,3 +187,51 @@ func TestContainsString(t *testing.T) {
 	})
 	yuptype.Equal(t, 1, len(errlog.Log))
 }
+
+func TestCompileRegexp(t *testing.T) {
+	errlog := yuptesting.Mock(func(t yuptesting.Test) {
+		compileRegexp(t, 0, `hello`)
+	})
+	yuptype.Equal(t, 0, len(errlog.Log))
+
+	errlog = yuptesting.Mock(func(t yuptesting.Test) {
+		compileRegexp(t, 0, `[`)
+	})
+	yuptype.Equal(t, 1, len(errlog.Log))
+}
+
+func TestMatchPatt(t *testing.T) {
+	p := []byte("hello world")
+	errlog := yuptesting.Mock(func(t yuptesting.Test) {
+		MatchPatt(t, p, `hello \w+`)
+	})
+	yuptype.Equal(t, 0, len(errlog.Log))
+
+	errlog = yuptesting.Mock(func(t yuptesting.Test) {
+		MatchPatt(t, p, `goodbye`)
+	})
+	yuptype.Equal(t, 1, len(errlog.Log))
+
+	errlog = yuptesting.Mock(func(t yuptesting.Test) {
+		MatchPatt(t, p, `[`)
+	})
+	yuptype.Equal(t, 1, len(errlog.Log))
+}
+
+func TestMatchPattString(t *testing.T) {
+	str := "hello world"
+	errlog := yuptesting.Mock(func(t yuptesting.Test) {
+		MatchPattString(t, str, `hello \w+`)
+	})
+	yuptype.Equal(t, 0, len(errlog.Log))
+
+	errlog = yuptesting.Mock(func(t yuptesting.Test) {
+		MatchPattString(t, str, `goodbye`)
+	})
+	yuptype.Equal(t, 1, len(errlog.Log))
+
+	errlog = yuptesting.Mock(func(t yuptesting.Test) {
+		MatchPattString(t, str, `[`)
+	})
+	yuptype.Equal(t, 1, len(errlog.Log))
+}

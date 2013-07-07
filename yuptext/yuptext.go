@@ -79,12 +79,16 @@ func MatchString(t yup.Test, str string, r *regexp.Regexp, msg ...interface{}) {
 
 func MatchPatt(t yup.Test, p []byte, patt string, msg ...interface{}) {
 	r := compileRegexp(t, 1, patt, msg...)
-	matchRegexp(t, 1, string(p), r, msg...)
+	yup.Assert(t, 1, r.Match(p),
+		fmt.Sprintf("pattern %q does not match %q; %v",
+			r.String(), trunc(string(p)), fmt.Sprint(msg...)))
 }
 
 func MatchPattString(t yup.Test, str, patt string, msg ...interface{}) {
 	r := compileRegexp(t, 1, patt, msg...)
-	matchRegexp(t, 1, str, r, msg...)
+	yup.Assert(t, 1, r.MatchString(str),
+		fmt.Sprintf("pattern %q does not match %q; %v",
+			r.String(), trunc(str), fmt.Sprint(msg...)))
 }
 
 func compileRegexp(t yup.Test, n int, patt string, msg ...interface{}) *regexp.Regexp {
@@ -93,10 +97,4 @@ func compileRegexp(t yup.Test, n int, patt string, msg ...interface{}) *regexp.R
 		fmt.Sprintf("invalid regular expression %q; %v",
 			patt, fmt.Sprint(msg...)))
 	return r
-}
-
-func matchRegexp(t yup.Test, n int, str string, r *regexp.Regexp, msg ...interface{}) {
-	yup.Assert(t, 1+n, r.MatchString(str),
-		fmt.Sprintf("pattern %q does not match %q; %v",
-			r.String(), trunc(str), fmt.Sprint(msg...)))
 }
