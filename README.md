@@ -1,5 +1,6 @@
 [install go]: http://golang.org/install.html "Install Go"
 [godoc.org]: http://godoc.org/github.com/bmatsuo/yup/ "godoc.org"
+[yuptext]: http://godoc.org/github.com/bmatsuo/yup/yuptext/ "yuptext"
 [yuptype]: http://godoc.org/github.com/bmatsuo/yup/yuptype/ "yuptype"
 [yuptesting]: http://godoc.org/github.com/bmatsuo/yup/yuptesting/ "yuptesting"
 [![Build Status](https://travis-ci.org/bmatsuo/yup.png?branch=master)](https://travis-ci.org/bmatsuo/yup)
@@ -17,6 +18,7 @@ Docs
 See Also
 ========
 
+##[yuptext][]
 ##[yuptype][]
 ##[yuptesting][]
 
