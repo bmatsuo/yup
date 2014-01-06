@@ -15,26 +15,26 @@ import (
 
 func TestEqual(t *testing.T) {
 	rec := yuptesting.Mock(func(t yuptesting.Test) { Equal(t, "abc", "abc") })
-	yup.Assert(t, 0, len(rec.Log) == 0, "unexpcted error")
+	yup.T(t, 0, len(rec.Log) == 0, "unexpcted error")
 	rec = yuptesting.Mock(func(t yuptesting.Test) { Equal(t, "abc", "def") })
-	yup.Assert(t, 0, len(rec.Log) == 1, "expected 1 error but got", len(rec.Log))
+	yup.T(t, 0, len(rec.Log) == 1, "expected 1 error but got", len(rec.Log))
 }
 
 func TestNotEqual(t *testing.T) {
 	rec := yuptesting.Mock(func(t yuptesting.Test) { NotEqual(t, "abc", "abc") })
-	yup.Assert(t, 0, len(rec.Log) == 1, "expected 1 error but got", len(rec.Log))
+	yup.T(t, 0, len(rec.Log) == 1, "expected 1 error but got", len(rec.Log))
 	rec = yuptesting.Mock(func(t yuptesting.Test) { NotEqual(t, "abc", "def") })
-	yup.Assert(t, 0, len(rec.Log) == 0, "unexpcted error")
+	yup.T(t, 0, len(rec.Log) == 0, "unexpcted error")
 }
 
 func TestNil(t *testing.T) {
 	rec := yuptesting.Mock(func(t yuptesting.Test) { Nil(t, nil) })
-	yup.Assert(t, 0, len(rec.Log) == 0, "unexpected error")
+	yup.T(t, 0, len(rec.Log) == 0, "unexpected error")
 	rec = yuptesting.Mock(func(t yuptesting.Test) { Nil(t, "abc") })
-	yup.Assert(t, 0, len(rec.Log) == 1, "expected 1 error but got", len(rec.Log))
+	yup.T(t, 0, len(rec.Log) == 1, "expected 1 error but got", len(rec.Log))
 	var m map[string]interface{}
 	rec = yuptesting.Mock(func(t yuptesting.Test) { Nil(t, m) })
-	yup.Assert(t, 0, len(rec.Log) == 0, "unexpected error")
+	yup.T(t, 0, len(rec.Log) == 0, "unexpected error")
 }
 
 func TestNotNil(t *testing.T) {

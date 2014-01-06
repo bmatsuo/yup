@@ -31,37 +31,37 @@ func trunc(s string) string {
 }
 
 func HasPrefix(t yup.Test, p, prefix []byte, msg ...interface{}) {
-	yup.Assert(t, 1, bytes.HasPrefix(p, prefix),
+	yup.T(t, 1, bytes.HasPrefix(p, prefix),
 		fmt.Sprintf("expected prefix %q on %q; %v",
 			prefix, trunc(string(p)), fmt.Sprint(msg...)))
 }
 
 func HasPrefixString(t yup.Test, str, prefix string, msg ...interface{}) {
-	yup.Assert(t, 1, strings.HasPrefix(str, prefix),
+	yup.T(t, 1, strings.HasPrefix(str, prefix),
 		fmt.Sprintf("expected prefix %q on %q; %v",
 			prefix, trunc(str), fmt.Sprint(msg...)))
 }
 
 func HasSuffix(t yup.Test, p, suffix []byte, msg ...interface{}) {
-	yup.Assert(t, 1, bytes.HasSuffix(p, suffix),
+	yup.T(t, 1, bytes.HasSuffix(p, suffix),
 		fmt.Sprintf("expected suffix %q on %q; %v",
 			suffix, trunc(string(p)), fmt.Sprint(msg...)))
 }
 
 func HasSuffixString(t yup.Test, str, suffix string, msg ...interface{}) {
-	yup.Assert(t, 1, strings.HasSuffix(str, suffix),
+	yup.T(t, 1, strings.HasSuffix(str, suffix),
 		fmt.Sprintf("expected suffix %q on %q; %v",
 			suffix, trunc(str), fmt.Sprint(msg...)))
 }
 
 func Contains(t yup.Test, p, segment []byte, msg ...interface{}) {
-	yup.Assert(t, 1, bytes.Contains(p, segment),
+	yup.T(t, 1, bytes.Contains(p, segment),
 		fmt.Sprintf("expected segment %q in %q; %v",
 			segment, trunc(string(p)), fmt.Sprint(msg...)))
 }
 
 func ContainsString(t yup.Test, str, substr string, msg ...interface{}) {
-	yup.Assert(t, 1, strings.Contains(str, substr),
+	yup.T(t, 1, strings.Contains(str, substr),
 		fmt.Sprintf("expected substring %q in %q; %v",
 			substr, str, fmt.Sprint(msg...)))
 }
@@ -79,21 +79,21 @@ func MatchString(t yup.Test, str string, r *regexp.Regexp, msg ...interface{}) {
 
 func MatchPatt(t yup.Test, p []byte, patt string, msg ...interface{}) {
 	r := compileRegexp(t, 1, patt, msg...)
-	yup.Assert(t, 1, r.Match(p),
+	yup.T(t, 1, r.Match(p),
 		fmt.Sprintf("pattern %q does not match %q; %v",
 			r.String(), trunc(string(p)), fmt.Sprint(msg...)))
 }
 
 func MatchPattString(t yup.Test, str, patt string, msg ...interface{}) {
 	r := compileRegexp(t, 1, patt, msg...)
-	yup.Assert(t, 1, r.MatchString(str),
+	yup.T(t, 1, r.MatchString(str),
 		fmt.Sprintf("pattern %q does not match %q; %v",
 			r.String(), trunc(str), fmt.Sprint(msg...)))
 }
 
 func compileRegexp(t yup.Test, n int, patt string, msg ...interface{}) *regexp.Regexp {
 	r, err := regexp.Compile(patt)
-	yup.Assert(t, 1+n, err == nil,
+	yup.T(t, 1+n, err == nil,
 		fmt.Sprintf("invalid regular expression %q; %v",
 			patt, fmt.Sprint(msg...)))
 	return r
