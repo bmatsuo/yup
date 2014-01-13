@@ -16,18 +16,25 @@ import (
 	"reflect"
 )
 
+func msgSuffix(msg []interface{}) string {
+	if len(msg) == 0 {
+		return ""
+	}
+	return "; " + fmt.Sprint(msg...)
+}
+
 // Deep structural equality between expected and val.
 func Equal(t yup.Test, expected, val interface{}, msg ...interface{}) {
 	yup.T(t, 1, reflect.DeepEqual(expected, val),
-		fmt.Sprintf("expected %#v but received %#v; %v",
-			expected, val, fmt.Sprint(msg...)))
+		fmt.Sprintf("expected %#v but received %#v%v",
+			expected, val, msgSuffix(msg)))
 }
 
 // The opposite of Equal().
 func NotEqual(t yup.Test, expected, val interface{}, msg ...interface{}) {
 	yup.T(t, 1, !reflect.DeepEqual(expected, val),
-		fmt.Sprintf("expected %#v but received %#v; %v",
-			expected, val, fmt.Sprint(msg...)))
+		fmt.Sprintf("expected %#v but received %#v%v",
+			expected, val, msgSuffix(msg)))
 }
 
 // Val is nil.
@@ -44,7 +51,7 @@ func Nil(t yup.Test, val interface{}, msg ...interface{}) {
 		reflect.Func:
 		isNil = v.IsNil()
 	}
-	yup.T(t, 1, isNil, "unexpected non-nil value; ", fmt.Sprint(msg...))
+	yup.T(t, 1, isNil, fmt.Sprintf("unexpected non-nil value (%v)%v", val, msgSuffix(msg)))
 }
 
 // The opposite of Nil().
@@ -61,21 +68,21 @@ func NotNil(t yup.Test, val interface{}, msg ...interface{}) {
 		reflect.Func:
 		isNil = v.IsNil()
 	}
-	yup.T(t, 1, !isNil, "unexpected nil value; ", fmt.Sprint(msg...))
+	yup.T(t, 1, !isNil, "unexpected nil value"+msgSuffix(msg))
 }
 
 // Val is the zero value of it's type.
 func Zero(t yup.Test, val interface{}, msg ...interface{}) {
 	yup.T(t, 1, isZero(val),
-		fmt.Sprintf("unexpected non-zero value (%#v); %v",
-			val, fmt.Sprint(msg...)))
+		fmt.Sprintf("unexpected non-zero value (%#v)%v",
+			val, msgSuffix(msg)))
 }
 
 // The opposite of Zero().
 func NotZero(t yup.Test, val interface{}, msg ...interface{}) {
 	yup.T(t, 1, !isZero(val),
-		fmt.Sprintf("unexpected zero value (%#v); %v",
-			val, fmt.Sprint(msg...)))
+		fmt.Sprintf("unexpected zero value (%#v)%v",
+			val, msgSuffix(msg)))
 }
 
 func isZero(val interface{}) bool {
@@ -89,22 +96,21 @@ func isZero(val interface{}) bool {
 
 // Err is not nil.
 func Error(t yup.Test, err error, msg ...interface{}) {
-	yup.T(t, 1, err != nil, "expected error; ", fmt.Sprint(msg...))
+	yup.T(t, 1, err != nil, "expected error"+msgSuffix(msg))
 }
 
 // The opposite of Error().
 func NotError(t yup.Test, err error, msg ...interface{}) {
 	yup.T(t, 1, err == nil,
-		fmt.Sprintf("unexpected error (%v); %v",
-			err, fmt.Sprint(msg...)))
+		fmt.Sprintf("unexpected error (%v)%v", err, msgSuffix(msg)))
 }
 
 // Ok is true.
 func True(t yup.Test, ok bool, msg ...interface{}) {
-	yup.T(t, 1, ok, "unexpected false value; ", fmt.Sprint(msg...))
+	yup.T(t, 1, ok, "unexpected false value"+msgSuffix(msg))
 }
 
 // Ok is false.
 func False(t yup.Test, ok bool, msg ...interface{}) {
-	yup.T(t, 1, !ok, "unexpected true value; ", fmt.Sprint(msg...))
+	yup.T(t, 1, !ok, "unexpected true value"+msgSuffix(msg))
 }
