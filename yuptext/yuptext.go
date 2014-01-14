@@ -2,10 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// yupstring.go [created: Sat,  6 Jul 2013]
+// yuptext.go [created: Sat,  6 Jul 2013]
 
 /*
-Yupstring helps make assertions on text.
+yuptext helps make assertions on text. it might be a good idea to rewrite
+this with go.text
 */
 package yuptext
 
