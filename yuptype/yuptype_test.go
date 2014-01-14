@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/bmatsuo/yup"
 	"github.com/bmatsuo/yup/yuptesting"
+	"regexp"
 	"testing"
 )
 
@@ -18,6 +19,11 @@ func TestEqual(t *testing.T) {
 	yup.T(t, 0, len(rec.Log) == 0, "unexpcted error")
 	rec = yuptesting.Mock(func(t yuptesting.Test) { Equal(t, "abc", "def") })
 	yup.T(t, 0, len(rec.Log) == 1, "expected 1 error but got", len(rec.Log))
+	rec = yuptesting.Mock(func(t yuptesting.Test) { Equal(t, 0, int64(0)) })
+	yup.T(t, 0, len(rec.Log) == 1, "expected 1 error but got", len(rec.Log))
+	match, err := regexp.MatchString(": expected int[(]0[)] received int64[(]0[)]$", rec.Log[0].Value)
+	yup.T(t, 0, err == nil, "invalid regular expression")
+	yup.T(t, 0, match, fmt.Sprintf("unexpected error message content: %q", rec.Log[0].Value))
 }
 
 func TestNotEqual(t *testing.T) {
