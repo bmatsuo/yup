@@ -91,7 +91,7 @@ func MatchPattString(t yup.Test, str, patt string, msg ...interface{}) {
 			r.String(), trunc(str), fmt.Sprint(msg...)))
 }
 
-func compileRegexp(t yup.Test, n int, patt string, msg ...interface{}) *regexp.Regexp {
+func compileRegexp(t yup.Test, n uint, patt string, msg ...interface{}) *regexp.Regexp {
 	r, err := regexp.Compile(patt)
 	yup.T(t, 1+n, err == nil,
 		fmt.Sprintf("invalid regular expression %q; %v",

@@ -33,26 +33,54 @@ func getcaller(n int) (file string, line int) {
 	return "", -1
 }
 
-func T(t Test, n int, ok bool, msg ...interface{}) {
+// low-level function that issues a fatal error to t, reporting a position in
+// the call stack to the user. if n is 0, the position reported to the user is
+// the invocation of F that triggered the error.
+func F(t Test, n uint, msg ...interface{}) {
+	file, line := getcaller(int(n))
+	caller := fmt.Sprintf("%s:%d", filepath.Base(file), line)
+	if CompatabilityMode {
+		// don't do anything crazy
+		t.Error(caller)
+		t.Fatal(fmt.Sprint(msg...))
+		return // in case t is a weird implementation
+	}
+	// testing package hack. override line number
+	t.Fatal(fmt.Sprintf("\r\t%s: ", caller), fmt.Sprint(msg...))
+}
+
+// low-level test function used to write other test functions.
+// pass the call depth n which you want to be reported to the user
+// if the test fails. see F().
+func T(t Test, n uint, ok bool, msg ...interface{}) {
 	if !ok {
-		file, line := getcaller(n)
-		caller := fmt.Sprintf("%s:%d", filepath.Base(file), line)
-		if CompatabilityMode {
-			// don't do anything crazy
-			t.Error(caller)
-			t.Fatal(fmt.Sprint(msg...))
-			return // in case t is a weird implementation
-		}
-		// testing package hack. override line number
-		t.Fatal(fmt.Sprintf("\r\t%s: ", caller), fmt.Sprint(msg...))
+		F(t, n+1, msg...)
 	}
 }
 
-// a generic assertion function. if ok is false then msg is logged as a fatal
-// error. the line number logged with msg is depth-th caller in Assert()'s
-// caller's call stack. a depth of zero logs the location of Assert()'s caller.
+// test with a deferred computation. fn is called only if ok is false.
+// see T().
+func TD(t Test, n uint, ok bool, fn func() string) {
+	if !ok {
+		F(t, n+1, fn())
+	}
+}
+
+// a simple assertion. see T().
 func Assert(t Test, ok bool, msg ...interface{}) {
 	T(t, 1, ok, msg...)
+}
+
+// an assertion with a deferred computation. see TD().
+func AssertD(t Test, n uint, ok bool, fn func() string) {
+	if !ok {
+		F(t, n+1, fn())
+	}
+}
+
+// fail the test. see F().
+func Fail(t Test, msg ...interface{}) {
+	F(t, 1, msg...)
 }
 
 // a minimal interface implemented by Test

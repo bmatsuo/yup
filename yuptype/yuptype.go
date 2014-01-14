@@ -23,21 +23,42 @@ func msgSuffix(msg []interface{}) string {
 	return "; " + fmt.Sprint(msg...)
 }
 
-// Deep structural equality between expected and val.
+// deep structural equality between expected and val.
 func Equal(t yup.Test, expected, val interface{}, msg ...interface{}) {
-	yup.T(t, 1, reflect.DeepEqual(expected, val),
-		fmt.Sprintf("expected %#v but received %#v%v",
-			expected, val, msgSuffix(msg)))
+	yup.TD(t, 1, reflect.DeepEqual(expected, val), func() string {
+		// messy logic to deal with hard-to-spot corner cases.
+		exstr := fmt.Sprintf("%#v", expected)
+		vstr := fmt.Sprintf("%#v", val)
+
+		if exstr == vstr {
+			// naively attempt to differenciate similar looking things.
+			_exstr := fmt.Sprintf("%T(%s)", expected, exstr)
+			_vstr := fmt.Sprintf("%T(%s)", val, vstr)
+			if _exstr != _vstr {
+				exstr, vstr = _exstr, _vstr
+			}
+		}
+
+		if len(exstr) > 60 || len(vstr) > 60 {
+			// split long lines up into multiple lines
+			return fmt.Sprintf(
+				"\n\texpected %s\n\treceived %s\n\t%s",
+				exstr, vstr, fmt.Sprint(msg...))
+		} else {
+			return fmt.Sprintf("expected %s received %s%s", exstr, vstr, msgSuffix(msg))
+		}
+	})
 }
 
-// The opposite of Equal().
-func NotEqual(t yup.Test, expected, val interface{}, msg ...interface{}) {
-	yup.T(t, 1, !reflect.DeepEqual(expected, val),
-		fmt.Sprintf("expected %#v but received %#v%v",
-			expected, val, msgSuffix(msg)))
+// the opposite of Equal().
+func NotEqual(t yup.Test, unexpected, val interface{}, msg ...interface{}) {
+	yup.T(t, 1, !reflect.DeepEqual(unexpected, val),
+		fmt.Sprintf("unexpected %s%v",
+			fmt.Sprintf("%#v", val),
+			msgSuffix(msg)))
 }
 
-// Val is nil.
+// val is nil.
 // is this ever different than Zero() for pointer types?
 func Nil(t yup.Test, val interface{}, msg ...interface{}) {
 	v := reflect.ValueOf(val)
@@ -54,7 +75,7 @@ func Nil(t yup.Test, val interface{}, msg ...interface{}) {
 	yup.T(t, 1, isNil, fmt.Sprintf("unexpected non-nil value (%v)%v", val, msgSuffix(msg)))
 }
 
-// The opposite of Nil().
+// the opposite of Nil().
 // is this ever different than NotZero() for pointer types?
 func NotNil(t yup.Test, val interface{}, msg ...interface{}) {
 	v := reflect.ValueOf(val)
@@ -71,14 +92,14 @@ func NotNil(t yup.Test, val interface{}, msg ...interface{}) {
 	yup.T(t, 1, !isNil, "unexpected nil value"+msgSuffix(msg))
 }
 
-// Val is the zero value of it's type.
+// val is the zero value of it's type.
 func Zero(t yup.Test, val interface{}, msg ...interface{}) {
 	yup.T(t, 1, isZero(val),
 		fmt.Sprintf("unexpected non-zero value (%#v)%v",
 			val, msgSuffix(msg)))
 }
 
-// The opposite of Zero().
+// the opposite of Zero().
 func NotZero(t yup.Test, val interface{}, msg ...interface{}) {
 	yup.T(t, 1, !isZero(val),
 		fmt.Sprintf("unexpected zero value (%#v)%v",
@@ -94,23 +115,23 @@ func isZero(val interface{}) bool {
 	return reflect.DeepEqual(val, zero.Interface())
 }
 
-// Err is not nil.
+// err is not nil.
 func Error(t yup.Test, err error, msg ...interface{}) {
 	yup.T(t, 1, err != nil, "expected error"+msgSuffix(msg))
 }
 
-// The opposite of Error().
+// the opposite of Error().
 func NotError(t yup.Test, err error, msg ...interface{}) {
 	yup.T(t, 1, err == nil,
 		fmt.Sprintf("unexpected error (%v)%v", err, msgSuffix(msg)))
 }
 
-// Ok is true.
+// ok is true.
 func True(t yup.Test, ok bool, msg ...interface{}) {
 	yup.T(t, 1, ok, "unexpected false value"+msgSuffix(msg))
 }
 
-// Ok is false.
+// ok is false.
 func False(t yup.Test, ok bool, msg ...interface{}) {
 	yup.T(t, 1, !ok, "unexpected true value"+msgSuffix(msg))
 }
