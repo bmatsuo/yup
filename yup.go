@@ -38,14 +38,20 @@ func getcaller(n int) (file string, line int) {
 // the call stack to the user. if n is 0, the position reported to the user is
 // the invocation of F that triggered the error.
 func F(t Test, n uint, msg ...interface{}) {
+	if (len(msg) == 0) {
+		msg = []interface{}{"failed"}
+	}
+
 	file, line := getcaller(int(n))
 	caller := fmt.Sprintf("%s:%d", filepath.Base(file), line)
+
 	if CompatabilityMode {
 		// don't do anything crazy
 		t.Error(caller)
 		t.Fatal(fmt.Sprint(msg...))
 		return // in case t is a weird implementation
 	}
+
 	// testing package hack. override line number
 	t.Fatal(fmt.Sprintf("\r\t%s: ", caller), fmt.Sprint(msg...))
 }
@@ -55,6 +61,9 @@ func F(t Test, n uint, msg ...interface{}) {
 // if the test fails. see F().
 func T(t Test, n uint, ok bool, msg ...interface{}) {
 	if !ok {
+		if (len(msg) == 0) {
+			msg = []interface{}{"assertion failed"}
+		}
 		F(t, n+1, msg...)
 	}
 }
@@ -63,7 +72,11 @@ func T(t Test, n uint, ok bool, msg ...interface{}) {
 // see T().
 func TD(t Test, n uint, ok bool, fn func() string) {
 	if !ok {
-		F(t, n+1, fn())
+		msg := "assertion failed"
+		if fn != nil {
+			msg = fn()
+		}
+		F(t, n+1, msg)
 	}
 }
 
@@ -73,10 +86,8 @@ func Assert(t Test, ok bool, msg ...interface{}) {
 }
 
 // an assertion with a deferred computation. see TD().
-func AssertD(t Test, n uint, ok bool, fn func() string) {
-	if !ok {
-		F(t, n+1, fn())
-	}
+func AssertD(t Test, ok bool, fn func() string) {
+	TD(t, 1, ok, fn)
 }
 
 // fail the test. see F().

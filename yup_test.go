@@ -66,3 +66,43 @@ func TestT(t *testing.T) {
 	rec = yuptesting.Mock(func(t yuptesting.Test) { Assert(t, true) })
 	Assert(t, !rec.HadFatal(), "unexpected assertion failure")
 }
+
+func TestAssertD(t *testing.T) {
+	numcalls := 0
+	rec := yuptesting.Mock(func(t yuptesting.Test) {
+		AssertD(t, false, func() string {
+			numcalls++
+			return "boom"
+		})
+	})
+	Assert(t, rec.HadFatal(), "unexpected assertion pass")
+	Assert(t, numcalls == 1, "numcalls not incremented once:", numcalls)
+
+	rec = yuptesting.Mock(func(t yuptesting.Test) { AssertD(t, false, nil) })
+	Assert(t, rec.HadFatal(), "unexpected assertion pass")
+	Assert(t, numcalls == 1, "numcalls not incremented once:", numcalls)
+
+	rec = yuptesting.Mock(func(t yuptesting.Test) {
+		AssertD(t, true, func() string {
+			numcalls++
+			return "boom"
+		})
+	})
+	Assert(t, !rec.HadFatal(), "unexpected assertion failure")
+	Assert(t, numcalls == 1, "numcalls changed:", numcalls)
+}
+
+func TestFail(t *testing.T) {
+	rec := yuptesting.Mock(func(t yuptesting.Test) { Fail(t) })
+	Assert(t, rec.HadFatal(), "unexpected assertion pass")
+}
+
+func TestGetcaller(t *testing.T) {
+	f, n := getcaller(10000)
+	Assert(t, f == "", "the file name is empty")
+	Assert(t, n == -1, "the line number is invalid (-1)")
+
+	f, n = getcaller(0)
+	Assert(t, f != "", "the file name is non-empty")
+	Assert(t, n >= 1, "the line number is valid")
+}
