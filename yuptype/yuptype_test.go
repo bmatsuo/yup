@@ -102,3 +102,15 @@ func TestNotError(t *testing.T) {
 	rec = yuptesting.Mock(func(t yuptesting.Test) { NotError(t, nil) })
 	Equal(t, 0, len(rec.Log), "unexpected number of errors")
 }
+
+func TestTrueFalse(t *testing.T) {
+	rec := yuptesting.Mock(func(t yuptesting.Test) { True(t, false) })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { True(t, true) })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
+
+	rec = yuptesting.Mock(func(t yuptesting.Test) { False(t, true) })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
+	rec = yuptesting.Mock(func(t yuptesting.Test) { False(t, false) })
+	Equal(t, 0, len(rec.Log), "unexpected number of errors")
+}
