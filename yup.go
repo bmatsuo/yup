@@ -5,10 +5,11 @@
 // yup.go [created: Wed,  5 Jun 2013]
 
 /*
-Yet another assertion package. Simple and extensible.
+Yup, another assertion package. Simple and extensible.
 
-The yup package exports a single generic function, Assert(). More complex
-assertions are defined in the package's subdirectories.
+The yup package exports simple, generic assertion functions that can be used
+directly in tests. There are also low-level functions for defining high-level
+assertions that reduce boilerplace such as those seen in the yup* subpackages.
 */
 package yup
 

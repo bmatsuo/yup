@@ -1,4 +1,3 @@
-[install go]: http://golang.org/install.html "Install Go"
 [godoc.org]: http://godoc.org/github.com/bmatsuo/yup/ "godoc.org"
 [yuptext]: http://godoc.org/github.com/bmatsuo/yup/yuptext/ "yuptext"
 [yuptype]: http://godoc.org/github.com/bmatsuo/yup/yuptype/ "yuptype"
@@ -13,7 +12,7 @@ Yup. Another assert package
 Docs
 ====
 
-[godoc.org][]
+on [godoc.org][]
 
 See Also
 ========
