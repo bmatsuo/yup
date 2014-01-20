@@ -113,4 +113,8 @@ func TestTrueFalse(t *testing.T) {
 	Equal(t, 1, len(rec.Log), "unexpected number of errors")
 	rec = yuptesting.Mock(func(t yuptesting.Test) { False(t, false) })
 	Equal(t, 0, len(rec.Log), "unexpected number of errors")
+
+	// tests the msgSuffix
+	rec = yuptesting.Mock(func(t yuptesting.Test) { False(t, true, "a message") })
+	Equal(t, 1, len(rec.Log), "unexpected number of errors")
 }

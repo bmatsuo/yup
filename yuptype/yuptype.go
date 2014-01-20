@@ -39,14 +39,7 @@ func Equal(t yup.Test, expected, val interface{}, msg ...interface{}) {
 			}
 		}
 
-		if len(exstr) > 60 || len(vstr) > 60 {
-			// split long lines up into multiple lines
-			return fmt.Sprintf(
-				"\n\texpected %s\n\treceived %s\n\t%s",
-				exstr, vstr, fmt.Sprint(msg...))
-		} else {
-			return fmt.Sprintf("expected %s received %s%s", exstr, vstr, msgSuffix(msg))
-		}
+		return fmt.Sprintf("expected %s received %s%s", exstr, vstr, msgSuffix(msg))
 	})
 }
 
