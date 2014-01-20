@@ -10,6 +10,16 @@ import (
 	"testing"
 )
 
+func TestMockPanic(t *testing.T) {
+	defer func() {
+		e := recover()
+		if e == nil {
+			t.Fatal("did not catch an error as expected")
+		}
+	}()
+	Mock(func(mocktest Test) { panic("boom") })
+}
+
 func TestMockPass(t *testing.T) {
 	rec := Mock(func(mocktest Test) {})
 	if rec.HadFatal() {
