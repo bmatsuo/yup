@@ -235,3 +235,9 @@ func TestMatchPattString(t *testing.T) {
 	})
 	yuptype.Equal(t, 1, len(errlog.Log))
 }
+
+func TestTrunc(t *testing.T) {
+	yuptype.Equal(t, "a", trunc("a", 0), "incorrect zero trucate behavior")
+	yuptype.Equal(t, "abcde", trunc("abcde", 0), "incorrect zero trucate behavior")
+	yuptype.Equal(t, "a...", trunc("abcde", 1), "incorrect one trucate behavior")
+}

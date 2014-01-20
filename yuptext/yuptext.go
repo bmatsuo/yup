@@ -19,14 +19,15 @@ import (
 	"strings"
 )
 
+// show at least n characters s.
 func trunc(s string, n int) string {
 	if n <= 0 {
 		return s
 	}
-	if len(s) <= n {
+	if len(s) <= n + 3 {
 		return s
 	}
-	return s[:n-3] + "..."
+	return s[:n] + "..."
 }
 
 func HasPrefix(t yup.Test, p, prefix []byte, msg ...interface{}) {
