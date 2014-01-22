@@ -1,7 +1,7 @@
-[godoc.org]: http://godoc.org/github.com/bmatsuo/yup/ "godoc.org"
-[yuptext]: http://godoc.org/github.com/bmatsuo/yup/yuptext/ "yuptext"
-[yuptype]: http://godoc.org/github.com/bmatsuo/yup/yuptype/ "yuptype"
-[yuptesting]: http://godoc.org/github.com/bmatsuo/yup/yuptesting/ "yuptesting"
+[yup]: http://godoc.org/github.com/bmatsuo/yup/ "yup"
+[yup/yuptext]: http://godoc.org/github.com/bmatsuo/yup/yuptext/ "yup/yuptext"
+[yup/yuptype]: http://godoc.org/github.com/bmatsuo/yup/yuptype/ "yup/yuptype"
+[yup/yuptesting]: http://godoc.org/github.com/bmatsuo/yup/yuptesting/ "yup/yuptesting"
 [![Build Status](https://travis-ci.org/bmatsuo/yup.png?branch=master)](https://travis-ci.org/bmatsuo/yup)
 Yup. Another assert package
 ===========================
@@ -12,14 +12,10 @@ Yup. Another assert package
 Docs
 ====
 
-on [godoc.org][]
-
-See Also
-========
-
-###[yuptext][]
-###[yuptype][]
-###[yuptesting][]
+###[yup][]
+###[yup/yuptext][]
+###[yup/yuptype][]
+###[yup/yuptesting][]
 
 Author
 ======
