@@ -14,6 +14,14 @@ import (
 	"testing"
 )
 
+func TestMsgSuffix(t*testing.T) {
+	// tests the msgSuffix
+	rec := yuptesting.Mock(func(t yuptesting.Test) { Equal(t, 1, 0, "a message") })
+	match, err := regexp.MatchString(": expected 1 received 0; a message$", rec.Log[0].Value)
+	yup.Assert(t, err == nil, "invalid regular expression")
+	yup.Assert(t, match, fmt.Sprintf("unexpected error message content: %q", rec.Log[0].Value))
+}
+
 func TestEqual(t *testing.T) {
 	rec := yuptesting.Mock(func(t yuptesting.Test) { Equal(t, "abc", "abc") })
 	yup.T(t, 0, len(rec.Log) == 0, "unexpcted error")
@@ -101,20 +109,4 @@ func TestNotError(t *testing.T) {
 	Equal(t, 1, len(rec.Log), "unexpected number of errors")
 	rec = yuptesting.Mock(func(t yuptesting.Test) { NotError(t, nil) })
 	Equal(t, 0, len(rec.Log), "unexpected number of errors")
-}
-
-func TestTrueFalse(t *testing.T) {
-	rec := yuptesting.Mock(func(t yuptesting.Test) { True(t, false) })
-	Equal(t, 1, len(rec.Log), "unexpected number of errors")
-	rec = yuptesting.Mock(func(t yuptesting.Test) { True(t, true) })
-	Equal(t, 0, len(rec.Log), "unexpected number of errors")
-
-	rec = yuptesting.Mock(func(t yuptesting.Test) { False(t, true) })
-	Equal(t, 1, len(rec.Log), "unexpected number of errors")
-	rec = yuptesting.Mock(func(t yuptesting.Test) { False(t, false) })
-	Equal(t, 0, len(rec.Log), "unexpected number of errors")
-
-	// tests the msgSuffix
-	rec = yuptesting.Mock(func(t yuptesting.Test) { False(t, true, "a message") })
-	Equal(t, 1, len(rec.Log), "unexpected number of errors")
 }

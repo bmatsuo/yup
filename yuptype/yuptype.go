@@ -118,13 +118,3 @@ func NotError(t yup.Test, err error, msg ...interface{}) {
 	yup.T(t, 1, err == nil,
 		fmt.Sprintf("unexpected error (%v)%v", err, msgSuffix(msg)))
 }
-
-// ok is true.
-func True(t yup.Test, ok bool, msg ...interface{}) {
-	yup.T(t, 1, ok, "unexpected false value"+msgSuffix(msg))
-}
-
-// ok is false.
-func False(t yup.Test, ok bool, msg ...interface{}) {
-	yup.T(t, 1, !ok, "unexpected true value"+msgSuffix(msg))
-}
