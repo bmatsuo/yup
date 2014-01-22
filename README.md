@@ -12,10 +12,13 @@ Yup. Another assert package
 Docs
 ====
 
-###[yup][]
-###[yup/yuptext][]
-###[yup/yuptype][]
-###[yup/yuptesting][]
+**[yup][]** -- basic assertions
+
+**[yup/yuptype][]** -- reflection-based assertions
+
+**[yup/yuptext][]** -- string content assertions
+
+**[yup/yuptesting][]** -- mocks for used by yup and friends to test assertion behavior
 
 Author
 ======
