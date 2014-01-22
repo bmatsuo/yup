@@ -5,8 +5,7 @@
 // yuptext.go [created: Sat,  6 Jul 2013]
 
 /*
-yuptext helps make assertions on text. it might be a good idea to rewrite
-this with go.text
+yuptext helps make assertions on text.
 */
 package yuptext
 
