@@ -112,9 +112,3 @@ func isZero(val interface{}) bool {
 func Error(t yup.Test, err error, msg ...interface{}) {
 	yup.T(t, 1, err != nil, "expected error"+msgSuffix(msg))
 }
-
-// the opposite of Error().
-func NotError(t yup.Test, err error, msg ...interface{}) {
-	yup.T(t, 1, err == nil,
-		fmt.Sprintf("unexpected error (%v)%v", err, msgSuffix(msg)))
-}
